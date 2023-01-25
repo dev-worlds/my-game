@@ -12,15 +12,19 @@ class Player extends Organism {
             switch (e.code) {
                 case 'KeyA':
                     this.#left = true;
+                    this.#right = false;
                     break;
                 case 'KeyS':
                     this.#bottom = true;
+                    this.#top = false;
                     break;
                 case 'KeyD':
                     this.#right = true;
+                    this.#left = false;
                     break;
                 case 'KeyW':
                     this.#top = true;
+                    this.#bottom = false;
                     break;
                 default:
                     e.preventDefault()
