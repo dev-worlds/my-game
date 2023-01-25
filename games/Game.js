@@ -11,10 +11,12 @@ class Game {
     constructor(bgImage) {
         this.steps = 0;
         this.#bgImage.src = bgImage
-        this.#context.drawImage(this.#bgImage, 0, 0, this.#canvas.width, this.#canvas.height)
-        const player = new Player(this.#context, { color: 'blue' });
-        this.#players.push(player)
-        this.draw()
+        this.#bgImage.onload = () => {
+            this.#context.drawImage(this.#bgImage, 0, 0, this.#canvas.width, this.#canvas.height)
+            const player = new Player(this.#context, { color: 'blue' });
+            this.#players.push(player)
+            this.draw()
+        }
     }
 
     draw() {

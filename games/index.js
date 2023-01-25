@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", init);
 window.addEventListener('resize', init)
 
 const startGame = () => {
-
     const newGame = new Game('assets/bgImage.png')
 }
 
