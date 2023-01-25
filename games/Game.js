@@ -5,8 +5,8 @@ class Game {
     #canvas = document.getElementById("canvas");
     #context = this.#canvas.getContext("2d");
     #bgImage = new Image();
-    #players = []
-    #enemies = []
+    #players = new Set()
+    #enemies = new Set()
 
     constructor(bgImage) {
         this.steps = 0;
@@ -14,9 +14,15 @@ class Game {
         this.#bgImage.onload = () => {
             this.#context.drawImage(this.#bgImage, 0, 0, this.#canvas.width, this.#canvas.height)
             const player = new Player(this.#context, { color: 'blue' });
-            this.#players.push(player)
+            this.#players.add(player)
             this.draw()
         }
+    }
+
+    checkIntersection({ config: config1 }, { config: config2 }) {
+        return config1.x + config1.width >= config2.x && config1.x <= config2.x + config2.width
+            && config1.y + config1.height >= config2.y && config1.y <= config2.y + config2.height;
+
     }
 
     draw() {
@@ -28,13 +34,12 @@ class Game {
         if (this.steps % 120 === 0) {
             const enemy = new Enemy(this.#context, { color: 'red' })
             enemy.moveRandom();
-            this.#enemies.push(enemy);
+            this.#enemies.add(enemy);
         }
-        this.#enemies.filter(enemy => {
-            if (!enemy.config.alive) return false;
+        this.#enemies.forEach(enemy => {
             enemy.draw();
-            return true;
         })
+
 
         // игрок ходит
         this.#players.forEach(player => {
@@ -43,15 +48,15 @@ class Game {
                 player.updateMove()
             }
             this.#enemies.forEach(enemy => {
-                if ((player.config.x + player.config.width >= enemy.config.x && player.config.x <= enemy.config.x + enemy.config.width)
-                    && player.config.y + player.config.height >= enemy.config.y && player.config.y <= enemy.config.y + enemy.config.height) {
-                    enemy.config.health -= 100;
+                if (this.checkIntersection(player, enemy)) {
+                    enemy.config.health -= player.config.damage;
                     if (enemy.config.health <= 0) {
-                        enemy.config.alive = false;
+                        this.#enemies.delete(enemy);
                     }
+
                 }
             })
-        })
+        });
 
         requestAnimationFrame(() => {
             this.draw();

@@ -60,7 +60,6 @@ class Organism {
         this.move([(this.right - this.left) * this.config.speed, (this.bottom - this.top) * this.config.speed])
     }
 
-
     getRandomInt(max, min = 0) {
         min = Math.ceil(min);
         max = Math.floor(max);
