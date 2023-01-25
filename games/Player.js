@@ -6,20 +6,20 @@ class Player extends Organism {
         window.addEventListener('keydown', (e) => {
             switch (e.code) {
                 case 'KeyA':
-                    this.left = 1;
-                    this.right = 0;
+                    this.direction.left = 1;
+                    this.direction.right = 0;
                     break;
                 case 'KeyS':
-                    this.bottom = 1;
-                    this.top = 0;
+                    this.direction.bottom = 1;
+                    this.direction.top = 0;
                     break;
                 case 'KeyD':
-                    this.right = 1;
-                    this.left = 0;
+                    this.direction.right = 1;
+                    this.direction.left = 0;
                     break;
                 case 'KeyW':
-                    this.top = 1;
-                    this.bottom = 0;
+                    this.direction.top = 1;
+                    this.direction.bottom = 0;
                     break;
                 default:
                     e.preventDefault()
@@ -28,16 +28,16 @@ class Player extends Organism {
         window.addEventListener('keyup', (e) => {
             switch (e.code) {
                 case 'KeyA':
-                    this.left = 0;
+                    this.direction.left = 0;
                     break;
                 case 'KeyS':
-                    this.bottom = 0;
+                    this.direction.bottom = 0;
                     break;
                 case 'KeyD':
-                    this.right = 0;
+                    this.direction.right = 0;
                     break;
                 case 'KeyW':
-                    this.top = 0;
+                    this.direction.top = 0;
                     break;
                 default:
                     e.preventDefault()
