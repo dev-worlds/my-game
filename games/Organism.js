@@ -1,20 +1,17 @@
 class Organism {
-    #width = 20;
-    #height = 30;
-    #speed = 10;
-    #color = 'red';
-    #x = 0;
-    #y = 0;
+    #config = {
+        width: 20,
+        height: 30,
+        speed: 10,
+        color: 'red',
+        x: 0,
+        y: 0
+    }
 
     constructor(context, config) {
         this.context = context;
         this.config = {
-            width: this.#width,
-            height: this.#height,
-            speed: this.#speed,
-            color: this.#color,
-            x: this.#x,
-            y: this.#y,
+            ...this.#config,
             ...config
         };
     }
@@ -32,23 +29,23 @@ class Organism {
     move([x, y]) {
         if (this.config.x + x < 0) {
             this.config.x = 0;
-        } else if (this.config.x + x > (this.context.canvas.width - this.#width)) {
-            this.config.x = this.context.canvas.width - this.#width;
+        } else if (this.config.x + x > (this.context.canvas.width - this.config.width)) {
+            this.config.x = this.context.canvas.width - this.config.width;
         } else {
             this.config.x += x;
         }
         if (this.config.y + y < 0) {
             this.config.y = 0;
-        } else if (this.config.y + y > (this.context.canvas.height - this.#height)) {
-            this.config.y = this.context.canvas.height - this.#height;
+        } else if (this.config.y + y > (this.context.canvas.height - this.config.height)) {
+            this.config.y = this.context.canvas.height - this.config.height;
         } else {
             this.config.y += y;
         }
     }
 
     moveRandom() {
-        this.config.x = this.getRandomInt(this.context.canvas.width - this.#width);
-        this.config.y = this.getRandomInt(this.context.canvas.height - this.#height);
+        this.config.x = this.getRandomInt(this.context.canvas.width - this.config.width);
+        this.config.y = this.getRandomInt(this.context.canvas.height - this.config.height);
     }
 
 
