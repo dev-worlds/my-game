@@ -1,8 +1,16 @@
 class Organism {
+
+    left = 0;
+    right = 0;
+    bottom = 0;
+    top = 0;
     #config = {
+        alive: true,
         width: 20,
         height: 30,
         speed: 10,
+        health: 100,
+        damage: 100,
         color: 'red',
         x: 0,
         y: 0
@@ -48,11 +56,15 @@ class Organism {
         this.config.y = this.getRandomInt(this.context.canvas.height - this.config.height);
     }
 
+    updateMove() {
+        this.move([(this.right - this.left) * this.config.speed, (this.bottom - this.top) * this.config.speed])
+    }
+
 
     getRandomInt(max, min = 0) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+        return Math.floor(Math.random() * (max - min)) + min;
     }
 }
 

@@ -1,30 +1,25 @@
 import Organism from "./Organism.js";
 
 class Player extends Organism {
-    #left = false;
-    #right = false;
-    #bottom = false;
-    #top = false;
-
     constructor(context, config) {
         super(context, config);
         window.addEventListener('keydown', (e) => {
             switch (e.code) {
                 case 'KeyA':
-                    this.#left = true;
-                    this.#right = false;
+                    this.left = 1;
+                    this.right = 0;
                     break;
                 case 'KeyS':
-                    this.#bottom = true;
-                    this.#top = false;
+                    this.bottom = 1;
+                    this.top = 0;
                     break;
                 case 'KeyD':
-                    this.#right = true;
-                    this.#left = false;
+                    this.right = 1;
+                    this.left = 0;
                     break;
                 case 'KeyW':
-                    this.#top = true;
-                    this.#bottom = false;
+                    this.top = 1;
+                    this.bottom = 0;
                     break;
                 default:
                     e.preventDefault()
@@ -33,27 +28,22 @@ class Player extends Organism {
         window.addEventListener('keyup', (e) => {
             switch (e.code) {
                 case 'KeyA':
-                    this.#left = false;
+                    this.left = 0;
                     break;
                 case 'KeyS':
-                    this.#bottom = false;
+                    this.bottom = 0;
                     break;
                 case 'KeyD':
-                    this.#right = false;
+                    this.right = 0;
                     break;
                 case 'KeyW':
-                    this.#top = false;
+                    this.top = 0;
                     break;
                 default:
                     e.preventDefault()
             }
         })
     }
-
-    updateMove() {
-        this.move([(this.#right - this.#left) * this.config.speed, (this.#bottom - this.#top) * this.config.speed])
-    }
-
 }
 
 export default Player;

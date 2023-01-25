@@ -23,19 +23,34 @@ class Game {
         this.steps++;
         this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
         this.#context.drawImage(this.#bgImage, 0, 0, this.#canvas.width, this.#canvas.height)
-        this.#players.forEach(player => {
-            player.draw()
-            if (this.steps % 5 === 0) {
-                player.updateMove()
-            }
-        })
+
+        // враги ходят
         if (this.steps % 120 === 0) {
             const enemy = new Enemy(this.#context, { color: 'red' })
             enemy.moveRandom();
             this.#enemies.push(enemy);
         }
-        this.#enemies.forEach(enemy => {
+        this.#enemies.filter(enemy => {
+            if (!enemy.config.alive) return false;
             enemy.draw();
+            return true;
+        })
+
+        // игрок ходит
+        this.#players.forEach(player => {
+            player.draw()
+            if (this.steps % 5 === 0) {
+                player.updateMove()
+            }
+            this.#enemies.forEach(enemy => {
+                if ((player.config.x + player.config.width >= enemy.config.x && player.config.x <= enemy.config.x + enemy.config.width)
+                    && player.config.y + player.config.height >= enemy.config.y && player.config.y <= enemy.config.y + enemy.config.height) {
+                    enemy.config.health -= 100;
+                    if (enemy.config.health <= 0) {
+                        enemy.config.alive = false;
+                    }
+                }
+            })
         })
 
         requestAnimationFrame(() => {
