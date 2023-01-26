@@ -13,7 +13,7 @@ class Game {
     // скорость игры
     #gameSpeed = 5
     // скорострельность
-    #rateFire = 200
+    #rateFire = 50
     #bulletSpeed = 10
     // появление мобов
     #respawnEnemy = 120
@@ -55,15 +55,15 @@ class Game {
             if (this.steps % this.#gameSpeed === 0) {
                 player.updateMove()
             }
-            this.#enemies.forEach(enemy => {
-                if (player.checkIntersection(enemy)) {
-                    enemy.config.health -= player.config.damage;
-                    if (enemy.config.health <= 0) {
-                        this.#enemies.delete(enemy);
-                    }
-
-                }
-            })
+            // this.#enemies.forEach(enemy => {
+            //     if (player.checkIntersection(enemy)) {
+            //         enemy.config.health -= player.config.damage;
+            //         if (enemy.config.health <= 0) {
+            //             this.#enemies.delete(enemy);
+            //         }
+            //
+            //     }
+            // })
             // создаём новые выстрелы
             if (this.steps % this.#rateFire === 0) {
                 const projectileConfig = {
